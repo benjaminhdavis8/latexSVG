@@ -1,0 +1,77 @@
+\documentclass{article}
+
+% Provide the \includegraphics command used by graphics system
+\usepackage{graphicx}
+
+% Provide utilities to change text color.
+% May be used by graphics system
+\usepackage{xcolor}
+
+% Standardized reference tool.
+\usepackage{prettyref}
+
+% More control over figure placement.
+\usepackage[section]{placeins}
+
+% Configure prettyref with the conventions of this document.
+% Prettyref relies on the use of a convention in the creation and use of
+% labels. For example, a convention where sections are labeled with
+% sec:<unique-id> would allow us to use prettyref to build all referances to a
+% section in a consistent manner.
+% The effect of the below is to set up the \prettyref command to infer the
+% presentation of a label <convention>:<unique-id> by looking at the
+% <convention> part.
+\newrefformat{sec}{section~\ref{#1}}
+\newrefformat{tab}{table~\ref{#1}}
+\newrefformat{shl}{\bf\textless shall~[\textendash\ref{#1}]\textgreater}
+
+\title{Latex Embedded SVG Test Document}
+\author{Benjamin Davis}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{A Section With an Embedded SVG}
+\begin{figure}
+  \caption{This is a test picture.}
+  \label{fig:TestPicture}
+  \centering
+  \scalebox{0.25}{\input{graphics/test-picture.pdf_tex}}
+\end{figure}
+Here is a figure that was taken from Chapter 10 section 1 of the W3C SVG
+specification. It was included in this Latex document via automation.
+
+\section{A Section With A Table}
+\begin{table}[h!]
+  \begin{center}
+    \caption{simple table to reference.}
+    \label{tab:ExampleTable}
+    \begin{tabular}{l|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+      \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+      $\alpha$ & $\beta$ & $\gamma$ \\
+      \hline
+      1 & 1110.1 & a\\
+      2 & 10.1 & b\\
+      3 & 23.113231 & c\\
+    \end{tabular}
+  \end{center}
+\end{table}
+
+This is only here to provide a target to test reference resolution from a
+converted SVG to the context of the compiled document.
+This \subparagraph{table shall \prettyref{shl:ReferenceTabel} be referenced}\label{shl:ReferenceTabel} below.
+
+\section{A Section With References}
+
+A reference to \prettyref{tab:ExampleTable} is included for comparison. This
+line fills requirement \prettyref{shl:ReferenceTabel}
+
+\begin{figure}
+\centering
+\input{graphics/letex-reference.pdf_tex}
+\end{figure}
+
+\end{document}
+
